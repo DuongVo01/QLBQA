@@ -17,7 +17,7 @@ namespace QLBQA.Models
         public Category? Category { get; set; }
         [Column(TypeName ="decimal(8,2)")] 
         public decimal? ProductPrice { get; set; }
-        [Column(TypeName = "decimal(2,2)")]
+        [Column(TypeName = "decimal(8,2)")]
         public decimal? ProductDiscount { get; set;}
         [StringLength(300)]
         public string? ProductPhoto {  get; set; }
