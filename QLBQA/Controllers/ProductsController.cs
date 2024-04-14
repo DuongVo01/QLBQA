@@ -26,6 +26,12 @@ namespace QLBQA.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> ProductsByCat(int categoryId)
+        {
+            var applicationDbContext = _context.Products.Where(p=>p.CategoryId == categoryId).Include(p => p.Category).Include(p => p.Color).Include(p => p.Size);
+            return View("Index", await applicationDbContext.ToListAsync());
+        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -14,7 +14,10 @@ namespace QLBQA.Controllers
         {
             _context = context;
         }
-
+        public IActionResult Index()
+        {
+            return View("Cart", HttpContext.Session.GetJson<Cart>("cart"));
+        }
         public IActionResult AddToCart(int productId)
         {
             Product? product = _context.Products.FirstOrDefault(P=> P.ProductId == productId);
@@ -22,6 +25,18 @@ namespace QLBQA.Controllers
             {
                 Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
                 Cart.AddItem(product, 1);
+                HttpContext.Session.SetJson("cart", Cart);
+            }
+            return View("Cart", Cart);
+        }
+
+        public IActionResult UpdateCart(int productId)
+        {
+            Product? product = _context.Products.FirstOrDefault(P => P.ProductId == productId);
+            if (product != null)
+            {
+                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+                Cart.AddItem(product, -1);
                 HttpContext.Session.SetJson("cart", Cart);
             }
             return View("Cart", Cart);
