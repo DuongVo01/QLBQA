@@ -26,5 +26,17 @@ namespace QLBQA.Controllers
             }
             return View("Cart", Cart);
         }
+
+        public IActionResult RemoveFromCart(int productId)
+        {
+            Product? product = _context.Products.FirstOrDefault(P => P.ProductId == productId);
+            if (product != null)
+            {
+                Cart = HttpContext.Session.GetJson<Cart>("cart");
+                Cart.RemoveLine(product);
+                HttpContext.Session.SetJson("cart", Cart);
+            }
+            return View("Cart", Cart);
+        }
     }
 }
